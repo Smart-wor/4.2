@@ -10,6 +10,7 @@ use App\Models\Foodchef;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Reservation;
+use Session;
 
 
 class HomeController extends Controller
@@ -55,21 +56,25 @@ class HomeController extends Controller
     public function addcart(Request $request,$id){
 
         if(Auth::id()){
-            if($request->quantity <=0){
+            $user_id=Auth::id();
+            $foodid=$id;
+            $quantity=$request->quantity;
 
-            }else{
-                $user_id=Auth::id();
-                $foodid=$id;
-                $quantity=$request->quantity;
-    
+            $stock = food::where('id',$foodid)->first();
+
+            if($stock->stock <= 0){
+                //check the available quantity of stock and reduce
+                //if quantity is greater than zero else return notification
+                session()->flash('success', 'Successfully done the operation.');
+                return redirect()->route('home');             
+            }else{    
                 $cart=new cart;
                 $cart->user_id=$user_id;
                 $cart->food_id=$foodid;
                 $cart->quantity=$quantity;
     
-                $cart->save();
-                
-                return redirect()->back();
+                $cart->save(); 
+                return redirect()->back();                
             }
            
         }else{
@@ -124,15 +129,10 @@ class HomeController extends Controller
             $data->address=$request->address;
             $data->save();
 
-            //check the available quantity of stock and reduce
-            //if quantity is greater than zero else return notification
-            if(($request->quantity[$key]) <= 0){
-                return redirect()->route('home')->with('success', 'User Deleted successfully.');
-
-            }else{
+            
                //responsible for reducing the stock
                 $this->updateStock($foodname, $request->quantity[$key]);  
-            }
+            
            
         }
 
