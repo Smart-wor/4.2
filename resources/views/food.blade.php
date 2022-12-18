@@ -32,9 +32,9 @@
                             </div>
                             </div>
                         </div>
-
+    
                         <input type="number" name="quantity" min="1" value="1" style="width: 80px;">
-                        <input type="submit" value="add to cart">
+                        <input type="submit" value="Add to cart">
 
                     </div>
                     </form>

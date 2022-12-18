@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <title>Swahili Food Factory - Restaurant HTML Template</title>
+    <title>Swahili Food Factory</title>
 <!--
     
 TemplateMo 558 Klassy Cafe
@@ -126,7 +126,12 @@ https://templatemo.com/tm-558-klassy-cafe
         </div>
     </header>
     <!-- ***** Header Area End ***** -->
-
+    @if (Session::has('success'))
+    <div class="alert" role="alert">
+        <strong>success</strong>
+    </div>
+        
+    @endif
     <!-- ***** Main Banner Area Start ***** -->
     <div id="top">
         <div class="container-fluid">
@@ -210,7 +215,7 @@ https://templatemo.com/tm-558-klassy-cafe
         </div>
     </section>
     <!-- ***** About Area Ends ***** -->
-
+   
     @include("food")
 
     @include("foodchef")

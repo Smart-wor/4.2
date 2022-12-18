@@ -41,8 +41,10 @@
   			<td>Price</td>
   			<td>Quantity</td>
   			<td>Total Price</td>
+			  <td>Action</td>
 
   		</tr>
+		
 
   		@foreach($data as $data)
 
@@ -54,6 +56,8 @@
   			<td>{{$data->price}}$</td>
   			<td>{{$data->quantity}}</td>
   			<td>{{$data->price * $data->quantity}}</td>
+			  <td><a href="{{url('/deleteorder', $data->id)}}">Delete</a></td>
+			  
 
   		</tr>
   		@endforeach

@@ -51,23 +51,28 @@ class HomeController extends Controller
         }
 
     }
+    //adding to cart
     public function addcart(Request $request,$id){
 
         if(Auth::id()){
-            $user_id=Auth::id();
-            $foodid=$id;
-            $quantity=$request->quantity;
+            if($request->quantity <=0){
 
-            $cart=new cart;
-            $cart->user_id=$user_id;
-            $cart->food_id=$foodid;
-            $cart->quantity=$quantity;
-
-            $cart->save();
-            
-            return redirect()->back();
-        }
-        else{
+            }else{
+                $user_id=Auth::id();
+                $foodid=$id;
+                $quantity=$request->quantity;
+    
+                $cart=new cart;
+                $cart->user_id=$user_id;
+                $cart->food_id=$foodid;
+                $cart->quantity=$quantity;
+    
+                $cart->save();
+                
+                return redirect()->back();
+            }
+           
+        }else{
             return redirect('/login');
         }
 
@@ -93,21 +98,44 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    //responsible for reducing current stock
+    public function updateStock($title, $quantity){
+        //$stock = food::find($title);
+        $stock = food::where('title', $title)->first();
+        $stock->decrement('stock', $quantity);
+    }
+
+    //function for checking stock quantity(not implemented yet)
+    public function checkStockQuantity(){
+
+    }
+
+    //checkout
     public function orderconfirm(Request $request)
     {
 
-    foreach($request->foodname as $key =>$foodname)
-    {
-        $data=new order;
-        $data->foodname=$foodname;
-        $data->price=$request->price[$key];
-        $data->quantity=$request->quantity[$key];
-        $data->name=$request->name;
-        $data->phone=$request->phone;
-        $data->address=$request->address;
-        $data->save();
-    }
+        foreach($request->foodname as $key =>$foodname){
+            $data=new order;
+            $data->foodname=$foodname;
+            $data->price=$request->price[$key];
+            $data->quantity=$request->quantity[$key];
+            $data->name=$request->name;
+            $data->phone=$request->phone;
+            $data->address=$request->address;
+            $data->save();
 
-    return redirect()->back();
+            //check the available quantity of stock and reduce
+            //if quantity is greater than zero else return notification
+            if(($request->quantity[$key]) <= 0){
+                return redirect()->route('home')->with('success', 'User Deleted successfully.');
+
+            }else{
+               //responsible for reducing the stock
+                $this->updateStock($foodname, $request->quantity[$key]);  
+            }
+           
+        }
+
+        return redirect()->route('home');
    }
 }

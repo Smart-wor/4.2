@@ -63,7 +63,7 @@
             <td>{{$data->title}}</td>
             <td>{{$data->price}}</td>
              <td>
-              {{$data->stock}}
+              {{$data->stock }}
             </td>
             <td>{{$data->description}}</td>
             <td><img src="/foodimage/{{$data->image}}"></td>

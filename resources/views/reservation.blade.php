@@ -54,6 +54,11 @@
                                 <input name="phone" type="text" id="phone" placeholder="Phone Number*" required="">
                               </fieldset>
                             </div>
+                             <div class="col-lg-6 col-sm-12">
+                              <fieldset>
+                                <input name="phone" type="text" id="phone" placeholder="Phone Number*" required="">
+                              </fieldset>
+                            </div>
                             <div class="col-md-6 col-sm-12">
                               <input type="number" name="guest" placeholder="Number of Guest">
                             </div>
@@ -62,7 +67,7 @@
                                   <!--<div class="input-group date" data-date-format="dd/mm/yyyy">-->
                                     <!--<input type="date" class="form-control" placeholder="dd/mm/yyyy" id="datemin" name="datemin" min="{{ now()->toDateString('Y-m-d') }}"><br><br>-->
                                     <!--<input  name="date" id="date" type="text" class="form-control" placeholder="dd/mm/yyyy">-->
-                                    <input type="date" name="date1" min="<?= date('Y-m-d'); ?>">
+                                    <input type="date" name="date" min="<?= date('Y-m-d'); ?>">
                                     <div class="input-group-addon" >
                                       <span class="glyphicon glyphicon-th"></span>
                                     </div>
